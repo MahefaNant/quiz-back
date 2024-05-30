@@ -3,7 +3,7 @@ package com.dev.quiz.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "admin")
+@Table(name = "type")
 public class Type {
 
     @Id
