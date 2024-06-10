@@ -10,7 +10,8 @@ create table candidate(
     id serial primary key ,
     mail varchar(50) unique ,
     name varchar(100) ,
-    password varchar(100)
+    password varchar(100) ,
+    canActive boolean default false
 );
 
 create table type(

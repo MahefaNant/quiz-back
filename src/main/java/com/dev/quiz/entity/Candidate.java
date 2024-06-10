@@ -19,6 +19,9 @@ public class Candidate {
     @Column(name = "password")
     private String password;
 
+    @Column(name ="canactive")
+    private boolean canActive = false;
+
     /*-------------------------*/
 
     public int getId() {
@@ -51,6 +54,14 @@ public class Candidate {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isCanActive() {
+        return canActive;
+    }
+
+    public void setCanActive(boolean canActive) {
+        this.canActive = canActive;
     }
 
     public void setPasswordEncode(String password) {
