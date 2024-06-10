@@ -1,5 +1,6 @@
 package com.dev.quiz.controller.admin;
 
+import com.dev.quiz.Model.MessageDetails;
 import com.dev.quiz.Model.MessageMod;
 import com.dev.quiz.entity.Admin;
 import com.dev.quiz.service.AdminService;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
 
 @RestController
@@ -22,14 +24,15 @@ public class AdminController {
     /*
         add new admin
      */
+
+    @GetMapping("/test")
+    public String test() {
+        return "azeaz";
+    }
+
     @PostMapping("/add")
-    public ResponseEntity<?> addAdmin(@RequestBody Admin admin) {
-        try {
-            Admin savedAdmin = adminService.add(admin);
-            return new ResponseEntity<>(savedAdmin, HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public Admin addAdmin(@RequestBody Admin admin) {
+        return  adminService.add(admin);
     }
 
     /*
@@ -51,9 +54,15 @@ public class AdminController {
         method for sign-in "admin"
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Admin admin) {
-        CompletableFuture<MessageMod> message = adminService.login(admin);
-        MessageMod mess = message.join();
-        return new ResponseEntity<>(mess , HttpStatus.ACCEPTED);
+    public CompletableFuture<MessageDetails> login(@RequestBody Admin admin) {
+        return adminService.login(admin);
     }
+
+    @GetMapping("/get-{id}")
+    public CompletableFuture<Admin> getAdmin(@PathVariable int id) {
+        return adminService.getAdmin(id);
+    }
+
+
+
 }

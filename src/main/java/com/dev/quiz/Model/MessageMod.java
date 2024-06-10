@@ -2,8 +2,14 @@ package com.dev.quiz.Model;
 
 public class MessageMod {
 
-    public int num ;
+    public MessageMod() {}
 
-    public String message;
+    public MessageMod(String message) {
+        this.message = message;
+    }
+
+    public int num = 0 ;
+
+    public String message = "";
 
 }
