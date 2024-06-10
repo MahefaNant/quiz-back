@@ -46,11 +46,11 @@ public class Question {
         this.question = question;
     }
 
-    public boolean isInProgres() {
+    public boolean getIsInProgres() {
         return isInProgres;
     }
 
-    public void setInProgres(boolean inProgres) {
+    public void setIsInProgres(boolean inProgres) {
         isInProgres = inProgres;
     }
 }

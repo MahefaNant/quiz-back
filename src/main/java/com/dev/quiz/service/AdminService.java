@@ -14,5 +14,4 @@ public interface AdminService {
     CompletableFuture<MessageDetails> login(Admin admin);
 
     CompletableFuture<Admin> getAdmin(int id);
-
 }

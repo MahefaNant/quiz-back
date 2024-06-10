@@ -39,15 +39,10 @@ public class AdminController {
         update admin
      */
     @PostMapping("/update")
-    public ResponseEntity<?> updateAdmin(@RequestBody Admin admin ,
+    public CompletableFuture<Admin> updateAdmin(@RequestBody Admin admin ,
                                          @RequestParam String newPassword ,
                                          @RequestParam String retapePassword ) {
-        try {
-            Admin savedAdmin = adminService.update(admin , newPassword, retapePassword).join();
-            return new ResponseEntity<>(savedAdmin, HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return adminService.update(admin , newPassword, retapePassword);
     }
 
     /*
