@@ -1,6 +1,5 @@
 package com.dev.quiz.controller.admin;
 
-import com.dev.quiz.Model.SearchCriteria;
 import com.dev.quiz.Model.searchCriteria.QuestionSearchCriteria;
 import com.dev.quiz.entity.Question;
 import com.dev.quiz.service.QuestionService;
@@ -8,9 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin/question")
