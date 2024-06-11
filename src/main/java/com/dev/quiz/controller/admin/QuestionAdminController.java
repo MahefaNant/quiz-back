@@ -28,8 +28,8 @@ public class QuestionAdminController {
     }
 
     // pageable : ?page=0&size=2&sort=idEx,desc
-    @GetMapping("/search")
-    public CompletableFuture<Page<Question>> searchQuestion(@RequestBody QuestionSearchCriteria criteria, Pageable pageable) {
-        return questionService.advanceSearch(criteria, pageable);
+    @GetMapping
+    public CompletableFuture<Page<Question>> questions(@RequestBody QuestionSearchCriteria criteria, Pageable pageable) {
+        return questionService.questions(criteria, pageable);
     }
 }

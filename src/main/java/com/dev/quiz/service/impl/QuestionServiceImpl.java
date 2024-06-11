@@ -3,6 +3,7 @@ package com.dev.quiz.service.impl;
 import com.dev.quiz.Model.SearchCriteria;
 import com.dev.quiz.Model.searchCriteria.QuestionSearchCriteria;
 import com.dev.quiz.entity.Question;
+import com.dev.quiz.entity.Type;
 import com.dev.quiz.repository.QuestionRepo;
 import com.dev.quiz.service.QuestionService;
 import com.dev.quiz.service.impl.specification.GlobalSpecification;
@@ -37,8 +38,17 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public CompletableFuture<List<Question>> all() {
-        return null;
+    public CompletableFuture<Question> update(Question question) {
+        return CompletableFuture.supplyAsync(() -> {
+            if(question.getType() == null ||
+                    question.getQuestion() ==null || question.getQuestion().trim().isEmpty())
+                throw new IllegalArgumentException("Datas Invalide !");
+            Question Q = questionRepo.findFirstById(question.getId()).orElseThrow(() -> new EntityNotFoundException("Question not found"));
+            Q.setType(new Type(question.getId()));
+            Q.setQuestion(question.getQuestion());
+            Q.setIsInProgres(question.getIsInProgres());
+            return questionRepo.save(Q);
+        });
     }
 
     @Override
@@ -47,7 +57,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public CompletableFuture<Page<Question>> advanceSearch(QuestionSearchCriteria criteria , Pageable pageable) {
+    public CompletableFuture<Page<Question>> questions(QuestionSearchCriteria criteria , Pageable pageable) {
 
         return CompletableFuture.supplyAsync(() -> {
 

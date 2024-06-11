@@ -23,6 +23,11 @@ public class TypeAdminController {
         return typeService.add(type);
     }
 
+    @PostMapping("/update")
+    public CompletableFuture<Type> update(@RequestBody Type type) {
+        return typeService.update(type);
+    }
+
     @GetMapping
     public CompletableFuture<List<Type>> all() {
         return typeService.all();

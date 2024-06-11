@@ -16,6 +16,9 @@ public class Type {
     @Column(name = "description")
     private String description;
 
+    public Type() {}
+    public Type(int id) { this.id = id;}
+
     /*------------------*/
 
     public int getId() {
