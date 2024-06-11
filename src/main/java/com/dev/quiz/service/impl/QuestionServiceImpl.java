@@ -1,22 +1,16 @@
 package com.dev.quiz.service.impl;
 
-import com.dev.quiz.Model.SearchCriteria;
 import com.dev.quiz.Model.searchCriteria.QuestionSearchCriteria;
 import com.dev.quiz.entity.Question;
 import com.dev.quiz.entity.Type;
 import com.dev.quiz.repository.QuestionRepo;
 import com.dev.quiz.service.QuestionService;
-import com.dev.quiz.service.impl.specification.GlobalSpecification;
 import com.dev.quiz.service.impl.specification.QuestionSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 @Service

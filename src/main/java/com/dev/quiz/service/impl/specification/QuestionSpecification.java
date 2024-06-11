@@ -1,6 +1,5 @@
 package com.dev.quiz.service.impl.specification;
 
-import com.dev.quiz.Model.SearchCriteria;
 import com.dev.quiz.Model.searchCriteria.QuestionSearchCriteria;
 import com.dev.quiz.entity.Question;
 import com.dev.quiz.entity.Type;
