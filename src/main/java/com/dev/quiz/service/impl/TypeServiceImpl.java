@@ -28,6 +28,20 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
+    public CompletableFuture<Type> update(Type type) {
+        return CompletableFuture.supplyAsync(() -> {
+           if(type.getName() == null || type.getDescription() == null
+           || type.getName().trim().isEmpty() || type.getDescription().trim().isEmpty())
+               throw new IllegalArgumentException("Invalid data");
+
+           Type T = typeRepo.findFirstById(type.getId()).orElseThrow(() -> new EntityNotFoundException("type not found"));
+            T.setName(type.getName());
+            T.setDescription(type.getDescription());
+            return typeRepo.save(T);
+        });
+    }
+
+    @Override
     public CompletableFuture<List<Type>> all() {
         return CompletableFuture.supplyAsync(() -> {
             List<Type> types = typeRepo.findAll();

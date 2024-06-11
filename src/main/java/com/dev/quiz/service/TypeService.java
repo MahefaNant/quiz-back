@@ -8,6 +8,7 @@ import java.util.concurrent.CompletableFuture;
 public interface TypeService {
 
     Type add(Type type);
+    CompletableFuture<Type> update(Type type);
 
     CompletableFuture<List<Type>> all();
 

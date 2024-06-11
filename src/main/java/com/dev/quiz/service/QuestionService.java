@@ -12,9 +12,10 @@ public interface QuestionService {
 
     Question add(Question question);
 
-    CompletableFuture<List<Question>> all();
+    CompletableFuture<Question> update(Question question);
+
     CompletableFuture<Question> getById(int id);
 
-    CompletableFuture<Page<Question>> advanceSearch(QuestionSearchCriteria criteria, Pageable pageable);
+    CompletableFuture<Page<Question>> questions(QuestionSearchCriteria criteria, Pageable pageable);
 
 }
