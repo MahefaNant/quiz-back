@@ -1,11 +1,15 @@
 package com.dev.quiz.service.impl;
 
 import com.dev.quiz.Model.SearchCriteria;
+import com.dev.quiz.Model.searchCriteria.QuestionSearchCriteria;
 import com.dev.quiz.entity.Question;
 import com.dev.quiz.repository.QuestionRepo;
 import com.dev.quiz.service.QuestionService;
 import com.dev.quiz.service.impl.specification.GlobalSpecification;
+import com.dev.quiz.service.impl.specification.QuestionSpecification;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -43,15 +47,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public CompletableFuture<List<Question>> advanceSearch(List<SearchCriteria> criterias) {
+    public CompletableFuture<Page<Question>> advanceSearch(QuestionSearchCriteria criteria , Pageable pageable) {
 
         return CompletableFuture.supplyAsync(() -> {
-            Specification<Object> spec = Specification.where(null);
-            for(SearchCriteria cr : criterias) {
-                spec = spec.and(new GlobalSpecification(cr));
-            }
 
-            List<Question> questions = questionRepo.findAll((Sort) spec);
+            Page<Question> questions = questionRepo.findAll(QuestionSpecification.getQuestions(criteria) , pageable);
             if(questions.isEmpty()) throw new EntityNotFoundException("Empty List");
             return questions;
         });

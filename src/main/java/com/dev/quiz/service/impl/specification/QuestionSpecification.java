@@ -1,27 +1,36 @@
 package com.dev.quiz.service.impl.specification;
 
 import com.dev.quiz.Model.SearchCriteria;
+import com.dev.quiz.Model.searchCriteria.QuestionSearchCriteria;
 import com.dev.quiz.entity.Question;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import com.dev.quiz.entity.Type;
+import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.domain.Specification;
 
-public class QuestionSpecification implements Specification<Question> {
+import java.util.ArrayList;
+import java.util.List;
 
-    private SearchCriteria criteria;
+public class QuestionSpecification {
 
-    public QuestionSpecification(SearchCriteria criteria) {
-        this.criteria = criteria;
+    public static Specification<Question> getQuestions(QuestionSearchCriteria criteria) {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (criteria.getIdType() != null) {
+                Join<Question , Type> typeJoin = root.join("type");
+                predicates.add(criteriaBuilder.equal(typeJoin.get("id"), criteria.getIdType()));
+            }
+
+            if (criteria.getQuestion() != null && !criteria.getQuestion().isEmpty()) {
+                predicates.add(criteriaBuilder.like(root.get("question"), "%" + criteria.getQuestion() + "%"));
+            }
+
+            if (criteria.getIsInProgress() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("isInProgres"), criteria.getIsInProgress()));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
     }
 
-    @Override
-    public Predicate toPredicate(Root<Question> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        switch (criteria.getOperation()) {
-            case ">":
-                return builder.greaterThan(root.get(criteria.getKey()) , criteria.getValue().toString());
-        }
-        return null;
-    }
 }

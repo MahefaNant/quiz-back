@@ -1,8 +1,11 @@
 package com.dev.quiz.controller.admin;
 
 import com.dev.quiz.Model.SearchCriteria;
+import com.dev.quiz.Model.searchCriteria.QuestionSearchCriteria;
 import com.dev.quiz.entity.Question;
 import com.dev.quiz.service.QuestionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,14 +27,9 @@ public class QuestionAdminController {
         return questionService.add(question);
     }
 
+    // pageable : ?page=0&size=2&sort=idEx,desc
     @GetMapping("/search")
-    public CompletableFuture<List<Question>> searchQuestion(@RequestParam(value = "criteria") List<String> criteria) {
-        List<SearchCriteria> searchCriteria = criteria.stream()
-                .map(cr -> {
-                    String[] parts = cr.split(",");
-                    return new SearchCriteria(parts[0] , parts[1] , parts[2]);
-                })
-                .collect(Collectors.toList());
-        return questionService.advanceSearch(searchCriteria);
+    public CompletableFuture<Page<Question>> searchQuestion(@RequestBody QuestionSearchCriteria criteria, Pageable pageable) {
+        return questionService.advanceSearch(criteria, pageable);
     }
 }
