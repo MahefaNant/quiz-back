@@ -26,7 +26,7 @@ public class QuestionAdminController {
 
     // pageable : ?page=0&size=2&sort=idEx,desc
     @GetMapping
-    public CompletableFuture<Page<Question>> questions(@RequestBody QuestionSearchCriteria criteria, Pageable pageable) {
+    public CompletableFuture<Page<Question>> questions(QuestionSearchCriteria criteria, Pageable pageable) {
         return questionService.questions(criteria, pageable);
     }
 }
